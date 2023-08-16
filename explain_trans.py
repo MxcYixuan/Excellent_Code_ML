@@ -208,16 +208,16 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=1e-1)
 
 for epoch in range(500):
-    output = model(encoder_input, decoder_input)
-    loss = criterion(output, target.view(-1))
+    output = model(encoder_input, decoder_input)  ## inference
+    loss = criterion(output, target.view(-1))     ## 求解loss
     # print(output.shape)
     # print(target.shape)
     # print(target.view(-1).shape)
     print('Epoch: ', '%04d' % (epoch + 1), 'loss = ', '{:.6f}'.format(loss))
 
-    optimizer.zero_grad()
-    loss.backward()
-    optimizer.step()
+    optimizer.zero_grad()                         ## 梯度清零
+    loss.backward()                               ## 反向传播求解梯度
+    optimizer.step()                              ## 更新权重参数
 
 # use model
 target_len = len(target_vocab)
