@@ -565,3 +565,5 @@ print("the decoder process done!")
 # next_symbol:  1
 # 下一个加入到decoder_input，用于mask的字符是:  1
 # 第 0 轮 I
+
+
