@@ -58,6 +58,10 @@ class ScaledDotProductAttention(nn.Module):
         # scores 经处理后变为：[1, 2, 4, 4]
         scores = torch.matmul(Q, K.transpose(-1, -2)) / np.sqrt(d_k)
         # 用value, 填充attn_mask中, 与mask中值为1位置相对应的元素
+        print('Q shape: ', Q.shape)
+        print('K shape: ', K.shape)
+        print('V shape: ', V.shape)
+        print('socres shape: ', scores.shape)
         scores.masked_fill(attn_mask, -1e9)
         # softmax 最后一维做 softmax归一
         # 变为[1, 2, 4, 4]
@@ -95,7 +99,7 @@ class Encoder(nn.Module):
         self.source_embedding = nn.Embedding(len(source_vocab), d_model)
         self.attention = MultiHeadAttention()
 
-    def forward(self, encoder_input):
+    def forward(self, encoder_input): #multi-heads-self-attention
         # encoder_input：1 * 4, embedded: 1 * 4 * 6
         embedded = self.source_embedding(encoder_input)
         # 得到的mask为：1 * 4 * 4
@@ -130,6 +134,7 @@ class Decoder(nn.Module):
         # [1, 4, 4]
         decoder_self_mask = torch.gt(decoder_self_attn_mask + decoder_subsequent_mask, 0)
         # decoder_embedded: [1, 4, 6],decoder_self_mask: [1, 4, 4], decoder_output: [1， 4， 6]
+        # important: Masked-Multi-Head-Self-Attention
         decoder_output = self.attention(decoder_embedded, decoder_embedded, decoder_embedded, decoder_self_mask)
 
 
@@ -137,8 +142,14 @@ class Decoder(nn.Module):
         # decoder_output = self.attention(decoder_embedded, decoder_embedded, decoder_embedded, decoder_self_mask)
 
         # 第二层的 Attention, 首先进行decoder_input 的mask机制
-        # decoder_input: q, [1, 4]; encoder_input: k, [1, 4]; decoder_encoder_attn_mask: [1, 4, 4]
-        decoder_encoder_attn_mask = get_attn_pad_mask(decoder_input, encoder_input)
+        # decoder_input: q, [1, 4]; encoder_input: k, [1, 4]; decoder_encoder_attn_mask: [1, 4],
+        # important: Multi-Head-Cross-Attention
+        print('decoder_input shape: ', decoder_input.shape)
+        print('encoder_input shape: ', encoder_input.shape)
+        decoder_encoder_attn_mask = get_attn_pad_mask(decoder_input, encoder_input) # 代表q和k;
+        print('decoder_encoder_attn_mask shape: ', decoder_encoder_attn_mask.shape)
+        print('decoder_encoder_attn_mask value: ', decoder_encoder_attn_mask)
+        # print(decoder_encoder_attn_mask)
         # 输入均为1*4*6，Q表示"S I eat meat" K表示"我吃肉E" V表示 "我吃肉E"，整体表示"我吃肉E"，并带上和"我吃肉E"、"S I eat meat"的关注力矩阵
         # decoder_output: [1, 4, 6]
         decoder_output = self.attention(decoder_output, encoder_output, encoder_output, decoder_encoder_attn_mask)
@@ -153,6 +164,7 @@ def get_attn_pad_mask(seq_q, seq_k):
     batch, len_k = seq_k.size()  # 1 * 4
     # seq_k 等于 0 的坐标为true, 其它false, 并中间插入一维；# [batch_size, 1, len_k], True is masked
     pad_attn_mask = seq_k.data.eq(0).unsqueeze(1)  # 返回 1 * 1 * 4
+    print('pad_attn_mask: ', pad_attn_mask)
 
     # 将 pad_attn_mask 扩展为: 1 * 4 * 4
     # [[[False, False, False, True]], [[False, False, False, True]],
@@ -247,3 +259,39 @@ for i in range(target_len):
         break
 
 print("the decoder process done!")
+
+
+
+# ***********我是分割线*************
+# i = 0
+# decoder_input[0][ 0 ]: tensor(4)
+# decoder_input:  tensor([[4, 0, 0, 0, 0]])
+# pad_attn_mask:  tensor([[[False,  True,  True,  True,  True]]])
+# Q shape:  torch.Size([1, 2, 5, 3])
+# K shape:  torch.Size([1, 2, 5, 3])
+# V shape:  torch.Size([1, 2, 5, 3])
+# socres shape:  torch.Size([1, 2, 5, 5])
+# decoder_input shape:  torch.Size([1, 5])
+# encoder_input shape:  torch.Size([1, 4])
+# pad_attn_mask:  tensor([[[False, False, False,  True]]])
+# decoder_encoder_attn_mask shape:  torch.Size([1, 5, 4])
+# decoder_encoder_attn_mask value:  tensor([[[False, False, False,  True],
+#          [False, False, False,  True],
+#          [False, False, False,  True],
+#          [False, False, False,  True],
+#          [False, False, False,  True]]])
+# Q shape:  torch.Size([1, 2, 5, 3])
+# K shape:  torch.Size([1, 2, 4, 3])
+# V shape:  torch.Size([1, 2, 4, 3])
+# socres shape:  torch.Size([1, 2, 5, 4])
+# logits shape:  torch.Size([5, 5])
+# logits:  tensor([[ 3.1167, 14.3907,  4.0073, -8.3052,  1.9785],
+#         [ 9.8962, 13.2096, -0.5747, -9.7799,  3.5187],
+#         [ 9.8962, 13.2096, -0.5747, -9.7799,  3.5187],
+#         [ 9.8962, 13.2096, -0.5747, -9.7799,  3.5187],
+#         [ 9.8962, 13.2096, -0.5747, -9.7799,  3.5187]],
+#        grad_fn=<SqueezeBackward1>)
+# prob:  tensor([1, 1, 1, 1, 1])
+# next_symbol:  1
+# 下一个加入到decoder_input，用于mask的字符是:  1
+# 第 0 轮 I
