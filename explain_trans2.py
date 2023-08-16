@@ -320,3 +320,289 @@ if __name__ == '__main__':
             print(i)
         loss.backward()
         optimizer.step()
+
+    print("------------模型参数---------------")
+    for parameters in model.parameters():
+        print(parameters)
+
+    print("------------以下是具体参数---------------")
+    params = list(model.named_parameters())
+    for parameters in params:
+        print(parameters)
+
+    print("------------模型参数end!---------------")
+
+    print('------------打印模型结构----------------')
+    print(model)
+
+    torchinfo.summary(model=model)
+    print('------------打印模型结构end!----------------')
+
+
+
+
+
+# 
+# ------------打印模型结构----------------
+# Transformer(
+#   (encoder): Encoder(
+#     (src_emb): Embedding(5, 512)
+#     (pos_emb): PositionalEncoding(
+#       (dropout): Dropout(p=0.1, inplace=False)
+#     )
+#     (layers): ModuleList(
+#       (0): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (1): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (2): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (3): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (4): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (5): EncoderLayer(
+#         (enc_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#     )
+#   )
+#   (decoder): Decoder(
+#     (tgt_emb): Embedding(7, 512)
+#     (pos_emb): PositionalEncoding(
+#       (dropout): Dropout(p=0.1, inplace=False)
+#     )
+#     (layers): ModuleList(
+#       (0): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (1): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (2): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (3): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (4): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#       (5): DecoderLayer(
+#         (dec_self_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (dec_enc_attn): MultiHeadAttention(
+#           (W_Q): Linear(in_features=512, out_features=512, bias=True)
+#           (W_K): Linear(in_features=512, out_features=512, bias=True)
+#           (W_V): Linear(in_features=512, out_features=512, bias=True)
+#           (linear): Linear(in_features=512, out_features=512, bias=True)
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#         (pos_ffn): PoswiseFeedForwardNet(
+#           (conv1): Conv1d(512, 2048, kernel_size=(1,), stride=(1,))
+#           (conv2): Conv1d(2048, 512, kernel_size=(1,), stride=(1,))
+#           (layer_norm): LayerNorm((512,), eps=1e-05, elementwise_affine=True)
+#         )
+#       )
+#     )
+#   )
+#   (projection): Linear(in_features=512, out_features=7, bias=False)
+# )
+# ===========================================================================
+# Layer (type:depth-idx)                             Param #
+# ===========================================================================
+# Transformer                                        --
+# ├─Encoder: 1-1                                     --
+# │    └─Embedding: 2-1                              2,560
+# │    └─PositionalEncoding: 2-2                     --
+# │    │    └─Dropout: 3-1                           --
+# │    └─ModuleList: 2-3                             --
+# │    │    └─EncoderLayer: 3-2                      3,152,384
+# │    │    └─EncoderLayer: 3-3                      3,152,384
+# │    │    └─EncoderLayer: 3-4                      3,152,384
+# │    │    └─EncoderLayer: 3-5                      3,152,384
+# │    │    └─EncoderLayer: 3-6                      3,152,384
+# │    │    └─EncoderLayer: 3-7                      3,152,384
+# ├─Decoder: 1-2                                     --
+# │    └─Embedding: 2-4                              3,584
+# │    └─PositionalEncoding: 2-5                     --
+# │    │    └─Dropout: 3-8                           --
+# │    └─ModuleList: 2-6                             --
+# │    │    └─DecoderLayer: 3-9                      4,204,032
+# │    │    └─DecoderLayer: 3-10                     4,204,032
+# │    │    └─DecoderLayer: 3-11                     4,204,032
+# │    │    └─DecoderLayer: 3-12                     4,204,032
+# │    │    └─DecoderLayer: 3-13                     4,204,032
+# │    │    └─DecoderLayer: 3-14                     4,204,032
+# ├─Linear: 1-3                                      3,584
+# ===========================================================================
+# Total params: 44,148,224
+# Trainable params: 44,148,224
+# Non-trainable params: 0
+# ===========================================================================
+# ------------打印模型结构end!----------------
